@@ -1,4 +1,4 @@
-type Post = {
+type PostType = {
   slug: string;
   frontmatter: {
     title: string;
@@ -11,4 +11,4 @@ type Post = {
   };
 };
 
-export default Post;
+export default PostType;
