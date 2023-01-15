@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import PostType from "@/types/PostType";
+import CategoryLabel from "@/components/CategoryLabel";
 
 type PostProps = {
   post: PostType;
@@ -19,7 +20,7 @@ function Post({ post }: PostProps) {
         <span className="font-light text-gray-600">
           {post.frontmatter.date}
         </span>
-        <div>{post.frontmatter.category}</div>
+        <CategoryLabel>{post.frontmatter.category}</CategoryLabel>
       </div>
 
       <div className="mt-2">

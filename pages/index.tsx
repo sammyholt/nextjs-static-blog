@@ -5,6 +5,7 @@ import matter from "gray-matter";
 import PostType from "@/types/PostType";
 import Link from "next/link";
 import Post from "@/components/Post";
+import { sortByDate } from "@/utils/index";
 
 type HomePageProps = {
   posts: PostType[];
@@ -53,7 +54,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      posts,
+      posts: posts.sort(sortByDate).slice(0, 6),
     },
   };
 }

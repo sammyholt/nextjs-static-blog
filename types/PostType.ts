@@ -5,7 +5,7 @@ type PostType = {
     date: string;
     excerpt: string;
     cover_image: string;
-    category: string;
+    category: "JavaScript" | "TypeScript" | "CSS" | "Python" | "Ruby" | "PHP";
     author: string;
     author_image: string;
   };
