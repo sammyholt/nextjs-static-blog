@@ -4,7 +4,7 @@ import path from "path";
 import matter from "gray-matter";
 import PostType from "@/types/PostType";
 import Post from "@/components/Post";
-import { sortByDate } from "@/utils/index";
+import { getPosts } from "@/lib/posts";
 
 type CategoryBlogPageProps = {
   posts: PostType[];
@@ -55,23 +55,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { category_name } }: any) {
-  const files = fs.readdirSync(path.join("posts"));
-
-  const posts = files.map((filename) => {
-    const slug = filename.replace(".md", "");
-
-    const markdownWithMeta = fs.readFileSync(
-      path.join("posts", filename),
-      "utf-8"
-    );
-
-    const { data: frontmatter } = matter(markdownWithMeta);
-
-    return {
-      slug,
-      frontmatter,
-    };
-  });
+  const posts = getPosts();
 
   const categoryPosts = posts.filter(
     (post) => post.frontmatter.category.toLowerCase() === category_name
@@ -79,7 +63,7 @@ export async function getStaticProps({ params: { category_name } }: any) {
 
   return {
     props: {
-      posts: categoryPosts.sort(sortByDate),
+      posts: categoryPosts,
       category_name,
     },
   };
