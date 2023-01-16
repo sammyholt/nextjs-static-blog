@@ -12,7 +12,6 @@ type HomePageProps = {
 };
 
 export default function HomePage({ posts }: HomePageProps) {
-  console.log(posts);
   return (
     <Layout>
       <h1 className="text-5xl border-b-4 p-5 font-bold">Latest Posts</h1>
