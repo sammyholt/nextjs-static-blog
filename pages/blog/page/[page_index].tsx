@@ -6,30 +6,40 @@ import Post from "@/components/Post";
 import { POSTS_PER_PAGE } from "@/config/index";
 import Pagination from "@/components/Pagination";
 import { getPosts } from "@/lib/posts";
+import CategoryList from "@/components/CategoryList";
 
 type BlogPageProps = {
   posts: PostType[];
   currentPage: number;
   numPages: number;
+  categories: string[];
 };
 
 export default function BlogPage({
   posts,
   numPages,
   currentPage,
+  categories,
 }: BlogPageProps) {
   console.log(posts);
   return (
     <Layout>
-      <h1 className="text-5xl border-b-4 p-5 font-bold">Blog</h1>
+      <div className="flex justify-between">
+        <div className="w-3/4 mr-10">
+          <h1 className="text-5xl border-b-4 p-5 font-bold">Blog</h1>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {posts.map((post, index) => (
-          <Post key={index} post={post} />
-        ))}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {posts.map((post, index) => (
+              <Post key={index} post={post} />
+            ))}
+          </div>
+
+          <Pagination currentPage={currentPage} numPages={numPages} />
+        </div>
+        <div className="w-1/4">
+          <CategoryList categories={categories} />
+        </div>
       </div>
-
-      <Pagination currentPage={currentPage} numPages={numPages} />
     </Layout>
   );
 }
@@ -57,6 +67,10 @@ export async function getStaticProps({ params }: any) {
 
   const posts = getPosts();
 
+  // Get categories for sidebar
+  const categories = posts.map((post) => post.frontmatter.category);
+  const uniqueCategories = Array.from(new Set(categories));
+
   const numPages = Math.ceil(files.length / POSTS_PER_PAGE);
   const pageIndex = page - 1;
   const orderedPosts = posts.slice(
@@ -69,6 +83,7 @@ export async function getStaticProps({ params }: any) {
       posts: orderedPosts,
       numPages,
       currentPage: page,
+      categories: uniqueCategories,
     },
   };
 }
