@@ -6,6 +6,7 @@ import PostType from "@/types/PostType";
 import Post from "@/components/Post";
 import { sortByDate } from "@/utils/index";
 import { POSTS_PER_PAGE } from "@/config/index";
+import Pagination from "@/components/Pagination";
 
 type BlogPageProps = {
   posts: PostType[];
@@ -28,6 +29,8 @@ export default function BlogPage({
           <Post key={index} post={post} />
         ))}
       </div>
+
+      <Pagination currentPage={currentPage} numPages={numPages} />
     </Layout>
   );
 }
